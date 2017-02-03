@@ -10,33 +10,42 @@
 	# Get m
 	li $v0, 5
 	syscall
-	move $t0, $v0 # Store m into $t0
+	move $t8, $v0 # Store m into $t8
+	li $t0, 1
+	#lw $t1, 0($a0) # where $a0 contains the address of the value of m
+	sllv $t0, $t0, $t8
+	addi $t0, $t0, -1 # subtract 1. Now $t0 contains the mask, 2^m - 1
 	
 	li $v0, 4
 	la $a0, message	# Tell the user what the period is
 	syscall
 	
-	addi $t5, $t5, 1
-	sllv $t5, $t5, $t0
-	#addi $t5, $t5, -1 # $t5 contains 2^m - 1
+		
 	
 	# fibonacci numbers
-	addi $t1, $t1, 1
-	addi $t2, $t2, 1
+	li $t1, 1
+	li $t2, 1
 	
-	addi $t0, $t0, 0 # Loop counter for period
+	li $t7, 1 # Use $t7 to check if the modulo is 1
 	
-	loop:
-	add $t3, $t1, $t2 # Create next Fibonacci number
-	move $t1, $t2 
-	move $t2, $t3
+	addi $t4, $t4, 0 # Loop counter for period
 	
-	addi $t0, $t0, 1
+loop:
+	addu $t3, $t1, $t2 # Create next Fibonacci number
+	addi $t1, $t2, 0
+	addi $t2, $t3, 0
+	#move $t1, $t2 
+	#move $t2, $t3
 	
-	beq $t6, $t7, end
-	j loop # jump back to the loop
-	end:
+	and $t5, $t1, $t0 # Store $t1 mod 2^m into $5
+	and $t6, $t2, $t0 
+	addi $t4, $t4, 1
+	
+	
+	bne $t6, $t7, loop # if the modulus isn't equal to 1, loop again	
+	bne $t5, $t7, loop
+
 	
 	li $v0, 1
-	move $a0, $t0
+	move $a0, $t4
 	syscall
