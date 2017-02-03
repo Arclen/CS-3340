@@ -37,5 +37,5 @@ loop:
 	la $a0, message	# Tell the user what the period is
 	syscall
 	li $v0, 1
-	move $a0, $t4
+	move $a0, $t4 # Print the period
 	syscall
