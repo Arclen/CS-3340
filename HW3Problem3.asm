@@ -1,3 +1,11 @@
+.data
+	string: .asciiz "2747184"
+.text
+#li $v0, 8
+#li $a1, 8
+#syscall 
+
+
 str2int:                # convert string to integer
   li $t6, 0x30          # $t6 = '0'
   li $t7, 0x39          # $t7 = '9'
