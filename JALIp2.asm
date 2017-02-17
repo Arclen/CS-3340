@@ -1,5 +1,7 @@
 .text
-         la $a0,str1 #Load and print string asking for string
+	main:
+	
+         la $a0,prompt # Prompt user for string
          li $v0,4
          syscall
 
@@ -8,19 +10,37 @@
          li $a1, 20 # allot the byte space for string
          move $t0,$a0 #save string to t0
          syscall
+         
+         la $t3, ($t0) # Load the address of the string into $t3
+         li $t2, 0 # Ascii sum
+         li $t4, -1 # String length
+         loop:
+         
+    	lb   $t1, 0($t3) # Load the first character into $t1
+    	beq  $t1, $zero, continue
 
-         la $a0,str2 #load and print "you wrote" string
-         li $v0,4
-         syscall
-
-         la $a0, buffer #reload byte space to primary address
-         move $a0,$t0 # primary address = t0 address (load pointer)
-         li $v0,4 # print string
+    	addiu $t3, $t3, 1 # Move to the next character
+    	addiu $t4, $t4, 1 # Add 1 to the length
+    	add $t2, $t2, $t1
+	j loop
+	
+	continue:
+         
+	 li $v0, 1
+         move $a0, $t2
          syscall
          
+         bne $t4, 0, main # If the user entered a non-empty string, go again
+         
          li $v0,10 #end program
-         syscall
+       	 syscall
+         
+
+         
+	hash: 
+	#$t4 contains the length of the string
+	#$t1 contains the address of the first character
+	
 .data
              buffer: .space 30
-             str1:  .asciiz "Enter string(max 20 chars): "
-             str2:  .asciiz "You wrote:\n"
+             prompt:  .ascii "\nEnter number to get hash code(max 20 chars): \n"
