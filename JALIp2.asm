@@ -22,12 +22,14 @@
 
     	addiu $t3, $t3, 1 # Move to the next character
     	addiu $t4, $t4, 1 # Add 1 to the length
-    	add $t2, $t2, $t1 
+    	addiu $t2, $t2, $t1 
 	j loop
 	
 	continue:
          move $a0, $t3
          move $a1, $t4
+         
+         beq $t4, 0, end # If user entered empty string, no need to call hash
          jal  hash
          
 	 li $v0, 1
@@ -36,15 +38,30 @@
          
          bne $t4, 0, main # If the user entered a non-empty string, go back to the beginning
          
+         end:
          li $v0,10 #end program
        	 syscall
          
 
          
 	hash: 
-	#$a1 contains the length of the string
 	#$a0 contains the address of the first character
+	#$a1 contains the length of the string
+	addi $sp, $sp, -8
+	sw $t0, 4($sp)
+	sw $t1, 0($sp)
+	add $t0, $t0, $a0
+	add $t1, $t1, $a1
+	sum:
+	lb   $t5, 0($t0) # Load the first character into $t1
+	addi $t1, $t1, -1
+	multu $t5, 
+	addiu $t0, $t0, 1
+	bne $t1, 0, sum
 	
+	lw $t0, 4($sp) 
+	lw $t1, 0($sp) 
+	addi $sp, $sp, 8
 	jr $ra
 	
 .data
