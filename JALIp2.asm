@@ -65,7 +65,7 @@
 	
 	multu $t5, $t9
     	mflo $t7
-    	add $v1, $v1, $t7
+    	addu $v1, $v1, $t7
 	addi $t0, $t0, 1 # Move to the next character
 	addi $t1, $t1, -1 # Decrement looper 
 	bne $t1, 0, sum
