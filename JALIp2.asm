@@ -33,6 +33,7 @@
          jal  hash
          
 	 li $v0, 1
+	 addi $t2, $t2, -10
          move $a0, $t2
          syscall
          
