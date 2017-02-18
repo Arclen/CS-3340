@@ -14,27 +14,23 @@
          la $t3, ($t0) # Load the address of the string into $t3
          li $t2, 0 # Ascii sum
          li $t4, -1 # String length
-         
          loop:
          
     	lb   $t1, 0($t3) # Load the first character into $t1
     	beq  $t1, $zero, continue
-
     	addiu $t3, $t3, 1 # Move to the next character
     	addiu $t4, $t4, 1 # Add 1 to the length
-    	add $t2, $t2, $t1 
+    	
 	j loop
 	
 	continue:
-         move $a0, $t3
+         move $a0, $t0
          move $a1, $t4
-         
          beq $t4, 0, end # If user entered empty string, no need to call hash
          jal  hash
          
 	 li $v0, 1
-	 addi $t2, $t2, -10
-         move $a0, $t2
+         move $a0, $v1
          syscall
          
          bne $t4, 0, main # If the user entered a non-empty string, go back to the beginning
@@ -51,19 +47,34 @@
 	addi $sp, $sp, -8
 	sw $t0, 4($sp)
 	sw $t1, 0($sp)
-	move $t0, $a0
+	la $t0, 0($a0)
 	add $t1, $t1, $a1
+	li $v1, 0
+	li $t6, 31
+	li $t9, 1
 	sum:
-	lb   $t5, 0($t0) # Load the first character into $t1
-	addi $t1, $t1, -1
-	addiu $t0, $t0, 1
+	lb   $t5, 0($t0) # Load the first character into $t5
+	move $t1, $t8
+	#Calculate 31^i
+	pow:
+	multu $t6, $t9
+	mflo $t9
+	addi $t8, $t8, -1
+	bne $t8, 0, pow
+	
+	multu $t5, $t6
+    	mflo $t7
+    	add $v1, $v1, $t7
+	addi $t0, $t0, 1 # Move to the next character
+	addi $t1, $t1, -1 # Decrement looper 
 	bne $t1, 0, sum
 	
 	lw $t0, 4($sp) 
 	lw $t1, 0($sp) 
 	addi $sp, $sp, 8
+
 	jr $ra
 	
 .data
              buffer: .space 30
-             prompt:  .ascii "\nEnter number to get hash code(max 20 chars): \n"
+             prompt: .ascii "\nEnter number to get hash code(max 20 chars): \n"
