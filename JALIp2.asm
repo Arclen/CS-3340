@@ -73,7 +73,11 @@
 	lw $t0, 4($sp) 
 	lw $t1, 0($sp) 
 	addi $sp, $sp, 8
-
+	
+	li $t4, 1
+	sll $t4, $t4, 31
+	addiu $t4, $t4, -1
+	and $v1, $v1, $t4
 	jr $ra
 	
 .data
