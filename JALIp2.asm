@@ -22,7 +22,7 @@
 
     	addiu $t3, $t3, 1 # Move to the next character
     	addiu $t4, $t4, 1 # Add 1 to the length
-    	addiu $t2, $t2, $t1 
+    	add $t2, $t2, $t1 
 	j loop
 	
 	continue:
@@ -50,12 +50,11 @@
 	addi $sp, $sp, -8
 	sw $t0, 4($sp)
 	sw $t1, 0($sp)
-	add $t0, $t0, $a0
+	move $t0, $a0
 	add $t1, $t1, $a1
 	sum:
 	lb   $t5, 0($t0) # Load the first character into $t1
 	addi $t1, $t1, -1
-	multu $t5, 
 	addiu $t0, $t0, 1
 	bne $t1, 0, sum
 	
