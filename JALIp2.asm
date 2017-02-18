@@ -48,13 +48,14 @@
 	sw $t0, 4($sp)
 	sw $t1, 0($sp)
 	la $t0, 0($a0)
-	add $t1, $t1, $a1
+	move $t1, $a1
 	li $v1, 0
 	li $t6, 31
 	li $t9, 1
 	sum:
 	lb   $t5, 0($t0) # Load the first character into $t5
-	move $t1, $t8
+	move $t8, $t1
+	
 	#Calculate 31^i
 	pow:
 	multu $t6, $t9
@@ -62,7 +63,7 @@
 	addi $t8, $t8, -1
 	bne $t8, 0, pow
 	
-	multu $t5, $t6
+	multu $t5, $t9
     	mflo $t7
     	add $v1, $v1, $t7
 	addi $t0, $t0, 1 # Move to the next character
