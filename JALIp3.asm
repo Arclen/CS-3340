@@ -26,12 +26,22 @@ start:
 	
 combo:
 	beq $t0, $t1, equal #see if n and k are equal
+	beq $t1, $zero, zero
 	
-	#jal combo
+	addi $t0, $t0, -1
+	addi $t1, $t1, -1
+	jal combo
+	addi $t0, $t0, -1
+	jal combo
 
 	jr $ra
 	
+zero:
+	li $v0, 1 #otherwise, print 1
+	li $a0, 1
+	syscall
 	
+	jr $ra
 equal:
 	beq $t0, $zero, exit #if n and k are both zero, exit the program
 	
