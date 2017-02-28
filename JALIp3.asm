@@ -1,5 +1,5 @@
 .data
-	promptn: .asciiz "Enter the value of n: "
+	promptn: .asciiz "\nEnter the value of n: "
 	promptk: .asciiz "Enter the value of k: "
 .text
 
@@ -21,8 +21,16 @@ start:
 	li $v0, 5
 	syscall
 	move $t1, $v0 # Store k into $t1
+	jal combo
+	j start # return to start
 	
+combo:
 	beq $t0, $t1, equal #see if n and k are equal
+	
+	#jal combo
+
+	jr $ra
+	
 	
 equal:
 	beq $t0, $zero, exit #if n and k are both zero, exit the program
@@ -31,6 +39,7 @@ equal:
 	li $a0, 1
 	syscall
 	
+	jr $ra
 	
 exit:
 	li $v0,10 		# End program
