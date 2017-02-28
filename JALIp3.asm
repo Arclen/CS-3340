@@ -34,20 +34,19 @@ combo:
 	addi $t0, $t0, -1
 	jal combo
 
+	li $v0, 1 
+	add $a0, $zero, $v1
+	syscall
 	jr $ra
 	
 zero:
-	li $v0, 1 #otherwise, print 1
-	li $a0, 1
-	syscall
+	addi $v1, $v1, 1
 	
 	jr $ra
 equal:
 	beq $t0, $zero, exit #if n and k are both zero, exit the program
 	
-	li $v0, 1 #otherwise, print 1
-	li $a0, 1
-	syscall
+	li $v1, 1
 	
 	jr $ra
 	
