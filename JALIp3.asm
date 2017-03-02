@@ -49,7 +49,7 @@ combo:
 	
 	bne $a2, $a1, L1   #see if n and k are equal
 	
-	li $v1, 1
+	addi $v1, $v1, 1
 	jr $ra
 	
 	
@@ -72,5 +72,5 @@ L1:
 	jr $ra
 skip: 
 	lw $ra, 0($sp)
-	li $v1, 1
+	addi $v1, $v1, 1
 	jr $ra
