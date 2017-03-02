@@ -44,11 +44,10 @@ exit:
 combo:
 	addi $sp, $sp, -12     # adjust stack for 2 items    
 	sw   $ra, 0($sp)      # save return address    
-	sw   $a2, 4($sp)      # save argument
+	sw   $a2, 4($sp)      # save arguments
 	sw   $a1, 8($sp)
 	
 	bne $a2, $a1, L1   #see if n and k are equal
-	
 	addi $v1, $v1, 1
 	jr $ra
 	
@@ -63,7 +62,8 @@ L1:
 	addi $a2, $a2, -1
 	addi $a1, $a1, -1
 	jal combo
-	
+	lw   $a2, 4($sp)
+	lw   $a1, 8($sp)
 	addi $a2, $a2, -1
 	jal combo
 	lw $ra, 0($sp)		#infinite loop starts here
@@ -73,6 +73,5 @@ L1:
 	
 	jr $ra
 skip: 
-	lw $ra, 0($sp)
 	addi $v1, $v1, 1
 	jr $ra
