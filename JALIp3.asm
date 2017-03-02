@@ -59,13 +59,15 @@ L1:
 	
 	beq $a1, $zero, skip
 	
-	addi $a2, $a2, -1
+	addi $a2, $a2, -1	
 	addi $a1, $a1, -1
-	jal combo
+	jal combo		# C(n-1,k-1)
+	
 	lw   $a2, 4($sp)
 	lw   $a1, 8($sp)
 	addi $a2, $a2, -1
-	jal combo
+	jal combo		# C(n-1,k)
+	
 	lw $ra, 0($sp)		#infinite loop starts here
 	lw   $a2, 4($sp)
 	lw   $a1, 8($sp)
@@ -73,5 +75,6 @@ L1:
 	
 	jr $ra
 skip: 
+	addi $sp, $sp, 12
 	addi $v1, $v1, 1
 	jr $ra
