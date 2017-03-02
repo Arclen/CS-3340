@@ -54,19 +54,17 @@ combo:
 	
 	
 L1:
-	li $v0, 4
-	la $a0, debug
-	syscall
+	#li $v0, 4
+	#la $a0, debug
+	#syscall
 	
 	beq $a1, $zero, skip
 	
 	addi $a2, $a2, -1
 	addi $a1, $a1, -1
-	lw $ra, 0($sp)
 	jal combo
 	
 	addi $a2, $a2, -1
-	lw $ra, 0($sp)
 	jal combo
 	lw $ra, 0($sp)		#infinite loop starts here
 	lw   $a2, 4($sp)
