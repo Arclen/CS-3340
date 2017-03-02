@@ -27,7 +27,7 @@ start:
 	beq $t0, $zero, exit #if n and k are both zero, exit the program
 continue:
 	li $v1, 0
-	j combo
+	jal combo
 	
 	li $v0, 1
 	move $a0, $v1
@@ -62,9 +62,10 @@ L1:
 	addi $a2, $a2, -1
 	addi $a1, $a1, -1
 	jal combo
+	
 	addi $a2, $a2, -1
 	jal combo
-	lw $ra, 0($sp)
+	lw $ra, 0($sp)		#infinite loop starts here
 	lw   $a2, 4($sp)
 	lw   $a1, 8($sp)
 	
