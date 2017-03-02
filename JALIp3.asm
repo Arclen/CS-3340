@@ -22,8 +22,8 @@ start:
 	li $v0, 5
 	syscall
 	move $t1, $v0 # Store k into $t1
-	move $a2, $t0 # Store k into $t1
-	move $a1, $t1 # Store k into $t1
+	move $a2, $t0 
+	move $a1, $t1 
 	beq $t0, $zero, exit #if n and k are both zero, exit the program
 continue:
 	li $v1, 0
@@ -57,17 +57,21 @@ L1:
 	li $v0, 4
 	la $a0, debug
 	syscall
+	
 	beq $a1, $zero, skip
 	
 	addi $a2, $a2, -1
 	addi $a1, $a1, -1
+	lw $ra, 0($sp)
 	jal combo
 	
 	addi $a2, $a2, -1
+	lw $ra, 0($sp)
 	jal combo
 	lw $ra, 0($sp)		#infinite loop starts here
 	lw   $a2, 4($sp)
 	lw   $a1, 8($sp)
+	addi $sp, $sp, 12
 	
 	jr $ra
 skip: 
