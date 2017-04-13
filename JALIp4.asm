@@ -9,10 +9,10 @@ li $v0, 1
 syscall
 
 loop:
+#beq something
 
-addi $a1, $a1, 4
 la $a0, debug
 li $v0, 4
 syscall
-
+addi $a1, $a1, 4
 j loop
