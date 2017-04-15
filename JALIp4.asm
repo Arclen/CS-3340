@@ -1,12 +1,13 @@
 .data
-debug: .asciiz ":\t addi\n"
-opcodes: .ascii "add  ", "addi ", "addiu", 
+tab: .asciiz ":\t "
+newline: .asciiz "\n"
+opcodes: .ascii "add  ","addi ", "addiu" "\n" 
 .text
 addi $t0, $t0, 21
 la $a1, 0x00400000
 lw $t1, 0($a1)
 
-syscall
+
 srl $t1, $t1, 26
 sll $t1, $t1, 26
 add $a0, $zero, $t1
@@ -19,7 +20,7 @@ add $a0, $zero, $a1
 li $v0, 34
 syscall
 
-la $a0, debug
+la $a0, tab
 li $v0, 4
 syscall
 
@@ -32,8 +33,13 @@ li $v0, 34
 syscall
 
 addi $a1, $a1, 4
-
+la $a0, tab
+li $v0, 4
+syscall
 la $a0, opcodes
+li $v0, 4
+syscall
+la $a0, newline
 li $v0, 4
 syscall
 addi $t5, $t5, 1
