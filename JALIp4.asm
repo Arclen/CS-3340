@@ -8,7 +8,7 @@ lw $t1, 0($a1)
 srl $t1, $t1, 26
 add $a0, $zero, $t1
 li $v0, 1
-syscall
+#syscall
 
 lw $t1, 4($a1)
 srl $t1, $t1, 26
@@ -20,15 +20,20 @@ la $a0, debug
 li $v0, 4
 syscall
 
+li $t5, 0
 loop:
-#beq something
-la $a0, debug
-li $v0, 4
-#syscall
+beq $t5, 10, end
+#la $a0, debug
 add $a0, $zero, $a1
-#la $a0, addi
 li $v0, 34
 syscall
+
 addi $a1, $a1, 4
 
-#j loop
+la $a0, debug
+li $v0, 4
+syscall
+addi $t5, $t5, 1
+j loop
+
+end:
