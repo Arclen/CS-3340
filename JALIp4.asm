@@ -31,4 +31,4 @@ li $v0, 34
 #syscall
 addi $a1, $a1, 4
 
-#j loop
+j loop
