@@ -8,13 +8,17 @@ addiuop: .ascii "addiu"
 
 .text
 addi $t0, $t0, 21
+
+#load PC initial value onto $a1
 la $a1, 0x00400000
 lw $t1, 0($a1)
 
 la $a0, opcodes
 #lb $a0, ($s0)
-li $v0, 4
+li $v0, 4 
 syscall
+
+#Only want the first 6 bits, because opcode is in the first 6 bits
 srl $t1, $t1, 26
 sll $t1, $t1, 26
 add $a0, $zero, $t1
@@ -32,9 +36,11 @@ li $v0, 4
 syscall
 
 li $t5, 0
+
 loop:
 beq $t5, 10, end
 #la $a0, debug
+#Print PC value in hex
 add $a0, $zero, $a1
 li $v0, 34
 syscall
