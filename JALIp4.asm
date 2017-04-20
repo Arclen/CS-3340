@@ -1,5 +1,5 @@
 .data
-tab: .asciiz ":\t opcode:\t"
+tab: .asciiz ":\t"
 newline: .asciiz "\n"
 opcodes: .word addop, addiop, addiuop
 addop: 		.ascii "add  \t"
@@ -22,7 +22,6 @@ add $a0, $zero, $a1
 li $v0, 34
 syscall
 
-
 la $a0, tab
 li $v0, 4
 syscall
@@ -35,7 +34,7 @@ lw $t1, 0($a1)
 #srl $t1, $t1, 26
 #sll $t1, $t1, 26
 add $a0, $zero, $t1
-li $v0, 35
+li $v0, 1
 syscall
 
 la $a0, newline
