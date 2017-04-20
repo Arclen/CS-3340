@@ -15,8 +15,7 @@ la $a1, 0x00400000
 
 loop:
 lw $t1, 0($a1)
-addi $t2, $t1, -32
-beq $t2, $0, end
+
 #Print PC value in hex
 add $a0, $zero, $a1
 li $v0, 34
@@ -42,7 +41,10 @@ li $v0, 4
 syscall
 addi $t5, $t5, 1
 
+addi $t2, $t1, -32
+beq $t2, $0, end
 addi $a1, $a1, 4
+
 j loop
 
 add $0,$0,$0
