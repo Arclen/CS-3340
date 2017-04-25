@@ -2,9 +2,9 @@
 tab: .asciiz ":\t"
 newline: .asciiz "\n"
 opcodes: .word addop, addiop, addiuop
-addop: 		.ascii "add  \t"
-addiop: 	.ascii "addi \t"
-addiuop: 	.ascii "addiu\t"
+addop: .ascii "add  \t"
+addiop: .ascii "addi \t"
+addiuop: .ascii "addiu\t"
 
 .text
 addi $t0, $t0, 21
